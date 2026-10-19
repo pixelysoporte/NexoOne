@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>NexoOne</title>
+    <meta name="color-scheme" content="dark light" />
+    <!-- App instalada en iPhone/iPad (Compartir → Añadir a pantalla de inicio). -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="NexoOne" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png" />
+    <link rel="manifest" href="./manifest.json" />
+    <style id="expo-reset">
+      /* Reinicio recomendado por react-native-web: página a toda altura, sin desplazamiento propio
+         (lo hace cada ScrollView) y el fondo del tema oscuro mientras carga. */
+      html,
+      body {
+        height: 100%;
+        background-color: #0b0e14;
+      }
+      body {
+        overflow: hidden;
+        overscroll-behavior: none;
+        -webkit-tap-highlight-color: transparent;
+      }
+      #root {
+        display: flex;
+        height: 100%;
+        flex: 1;
+      }
+      /* La app está diseñada para móvil: en pantallas anchas se muestra como una columna centrada
+         (el mismo ancho que `layout.appMaxWidth` en src/theme/tokens.ts). */
+      @media (min-width: 600px) {
+        #root {
+          width: 100%;
+          max-width: 480px;
+          margin: 0 auto;
+          box-shadow: 0 0 0 1px rgba(143, 156, 174, 0.18);
+        }
+      }
+      /* Los campos de texto ya marcan el foco con su propio borde de color. */
+      input:focus,
+      textarea:focus {
+        outline: none;
+      }
+    </style>
+    <script>
+      // En iPhone/iPad, Safari amplía la página al tocar un campo con letra de menos de 16 px. Con
+      // `maximum-scale=1` deja de hacerlo, y en iOS el usuario sigue pudiendo ampliar con dos dedos.
+      // Solo en iOS: en Android ese valor sí impediría ampliar.
+      (function () {
+        var iOS = /iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+        if (!iOS) return;
+        var viewport = document.querySelector('meta[name="viewport"]');
+        if (viewport) viewport.setAttribute("content", viewport.getAttribute("content") + ", maximum-scale=1");
+      })();
+    </script>
+  <meta name="theme-color" content="#0B0E14">
+<meta name="description" content="Entrenamiento personal gratis: programa de musculación, Pulso diario, bienestar y progreso. Sin cuenta: tus datos se quedan en tu dispositivo.">
+<link rel="icon" href="./favicon.ico" /></head>
+
+  <body>
+    <noscript>NexoOne necesita JavaScript para funcionar.</noscript>
+    <div id="root"></div>
+    <script>
+      // Funcionamiento sin conexión (ver `sw.js`, generado por scripts/build-web.mjs). No en local,
+      // para que el servidor de desarrollo nunca sirva una versión guardada.
+      if ("serviceWorker" in navigator && location.protocol === "https:") {
+        window.addEventListener("load", function () {
+          navigator.serviceWorker.register("./sw.js").catch(function () {});
+        });
+      }
+    </script>
+  <script src="./app/static/js/web/index-8ba81b8860e0b6551feb756e9871eb8a.js" defer></script>
+</body>
+</html>
